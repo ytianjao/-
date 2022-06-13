@@ -1,0 +1,3 @@
+disease_name,entity_name,entity_content,relation_name
+肝癌,drug,药物,用药
+肝癌,operation,手术,治疗方法

@@ -1,0 +1,44 @@
+LOAD CSV WITH HEADERS FROM 'file:///desktop-csv-import/body_node.csv' AS row
+WITH row.disease_name AS diseaseName, row.entity_content AS entityContent
+MERGE(d:DiseaseNode{diseaseName:diseaseName})
+MERGE(e:BodyEntityNode{entityContent:entityContent})
+MERGE (e)-[rel:解剖部位]->(d)
+RETURN count(rel)
+
+LOAD CSV WITH HEADERS FROM 'file:///desktop-csv-import/disease_node.csv' AS row
+WITH row.disease_name AS diseaseName, row.entity_content AS entityContent
+MERGE(d:DiseaseNode{diseaseName:diseaseName})
+MERGE(e:DiseaseNode{diseaseName:entityContent})
+MERGE (e)-[rel:疾病和诊断]->(d)
+RETURN count(rel)
+
+LOAD CSV WITH HEADERS FROM 'file:///desktop-csv-import/check_node.csv' AS row
+WITH row.disease_name AS diseaseName, row.entity_content AS entityContent
+MERGE(d:DiseaseNode{diseaseName:diseaseName})
+MERGE(e:CheckEntityNode{entityContent:entityContent})
+MERGE (e)-[rel:影像检查]->(d)
+RETURN count(rel)
+
+LOAD CSV WITH HEADERS FROM 'file:///desktop-csv-import/test_node.csv' AS row
+WITH row.disease_name AS diseaseName, row.entity_content AS entityContent
+MERGE(d:DiseaseNode{diseaseName:diseaseName})
+MERGE(e:TestEntityNode{entityContent:entityContent})
+MERGE (e)-[rel:实验室检验]->(d)
+RETURN count(rel)
+
+LOAD CSV WITH HEADERS FROM 'file:///desktop-csv-import/drug_node.csv' AS row
+WITH row.disease_name AS diseaseName, row.entity_content AS entityContent
+MERGE(d:DiseaseNode{diseaseName:diseaseName})
+MERGE(e:DrugEntityNode{entityContent:entityContent})
+MERGE (e)-[rel:药物]->(d)
+RETURN count(rel)
+
+LOAD CSV WITH HEADERS FROM 'file:///desktop-csv-import/operation_node.csv' AS row
+WITH row.disease_name AS diseaseName, row.entity_content AS entityContent
+MERGE(d:DiseaseNode{diseaseName:diseaseName})
+MERGE(e:OperationEntityNode{entityContent:entityContent})
+MERGE (e)-[rel:手术]->(d)
+RETURN count(rel)
+
+
+match (e:entity{entityContent: '腹腔镜上根治性全胃切除+食管空肠ROUX-Y吻合术（D2）'}) -[r]->(d:disease)return e,d,r
